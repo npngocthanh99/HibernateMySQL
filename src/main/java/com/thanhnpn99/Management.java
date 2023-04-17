@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Query;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -17,6 +19,7 @@ import com.thanhnpn99.model.Syllabus;
 import com.thanhnpn99.util.HibernateUtil;
 
 public class Management {
+
 	public static void main(String[] args) {
 //		createCourseSyllabuses();
 //		getCourseSyllabuses(1);
@@ -24,11 +27,65 @@ public class Management {
 //		createFresherAndCourse();
 //		createFresherAndGroup();
 		createGroup();
-//		getGroup();
-//		updateGroup();
-		deleteGroup();
+		deleteGroupUsingHQL();
 		HibernateUtil.shutdown();
 	}
+	
+	private static void deleteGroupUsingHQL() {
+
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		try {
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			String queryStr = "delete from Group Where id = :id";
+			Query query = session.createQuery(queryStr);
+			query.setParameter("id", 2);
+			int result = query.executeUpdate();
+			System.out.println(result);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+	}
+	
+	private static void updateGroupUsingHQL() {
+
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		try {
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			String queryStr = "Update Group set name = :name Where id = :id";
+			Query query = session.createQuery(queryStr);
+			query.setParameter("id", 2);
+			query.setParameter("name", "Funny Java Group");
+			int result = query.executeUpdate();
+			System.out.println(result);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static void queryGroupUsingHQL() {
+
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		try {
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+//			String queryStr = "FROM Group where id = :id and name like :name";
+			String queryStr = "SELECT name FROM Group where id = :id and name like :name";
+			Query query = session.createQuery(queryStr);
+			query.setParameter("id", 2);
+			query.setParameter("name", "Java%");
+			List<Group> groups = (List<Group>)query.getResultList();
+			System.out.println(groups);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+	}
+	
 	private static void deleteGroup() {
 
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
