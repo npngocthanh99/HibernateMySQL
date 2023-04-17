@@ -10,14 +10,16 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Groups")
+@Table(name = "[Group]")
 public class Group {
 	
 	@Id
 	@GeneratedValue
 	private int id;
+	
 	private String name;
-	@ManyToMany
+	
+	@ManyToMany(mappedBy = "groups")
 	private Set<Fresher> freshers = new HashSet<>();
 	
 	public int getId() {

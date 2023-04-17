@@ -11,13 +11,13 @@ public class Address {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "Id")
+	@Column(name = "id")
 	private int id;
 	
-	@Column(name = "Street")
+	@Column(name = "street")
 	private String street;
 	
-	@Column(name = "District")
+	@Column(name = "district")
 	private String district;
 
 	public int getId() {

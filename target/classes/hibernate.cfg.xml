@@ -18,10 +18,6 @@
 		<!-- use 'create' to Create tables on application startup else use 'update' -->
 		<property name="hbm2ddl.auto">create</property>
 
-		<!-- JDBC connection pool -->
-		<property name="connection.pool_size">5</property>
-		<property name="current_session_context_class">thread</property>
-
 		<!-- Domain Model classes to be mapped -->
 		<mapping class="com.thanhnpn99.model.Course"/>
 		<mapping class="com.thanhnpn99.model.Address"/>

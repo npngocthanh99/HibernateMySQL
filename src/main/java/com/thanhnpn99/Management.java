@@ -23,9 +23,42 @@ public class Management {
 //		createFresherAndAddress();
 //		createFresherAndCourse();
 		createFresherAndGroup();
-		HibernateUtil.close();
+		
+		HibernateUtil.shutdown();
 	}
 
+//	private static void createGroup() {
+//		Fresher fresher1 = new Fresher();
+//		Fresher fresher2 = new Fresher();
+//		Group group1 = new Group("Group 1");
+//		Group group2 = new Group("Group 2");
+//		Set<Fresher> freshers = new HashSet<>();
+//		freshers.add(fresher1);
+//		freshers.add(fresher2);
+//		Set<Group> groups = new HashSet<>();
+//		groups.add(group1);
+//		groups.add(group2);
+//		fresher1.setName("Fresher 1");
+//		fresher2.setName("Fresher 2");
+//		fresher1.setGroups(groups);
+//		fresher2.setGroups(groups);
+//		group1.setFreshers(freshers);
+//		group2.setFreshers(freshers);
+//		
+//		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+//		try {
+//			Session session = sessionFactory.openSession();
+//			session.beginTransaction();
+//			session.save(group1);
+//			session.save(group2);
+//			session.save(fresher1);
+//			session.save(fresher2);
+//			session.getTransaction().commit();
+//		} catch (Exception e) {
+//			System.out.println(e.toString());
+//		}
+//	}
+	
 	private static void createFresherAndGroup() {
 		Fresher fresher1 = new Fresher();
 		Fresher fresher2 = new Fresher();
@@ -99,7 +132,6 @@ public class Management {
 			Course course = (Course) session.get(Course.class, id);
 			System.out.println(course.getName());
 			session.getTransaction().commit();
-			HibernateUtil.close();
 			System.out.println(course.getSyllabus());
 		} catch (Exception e) {
 			System.out.println(e.toString());

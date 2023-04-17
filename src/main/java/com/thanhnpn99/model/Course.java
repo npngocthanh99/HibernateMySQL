@@ -23,10 +23,10 @@ public class Course {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "ID")
+	@Column(name = "id")
 	private int id;
 
-	@Column(name = "Name")
+	@Column(name = "name")
 	private String name;
 
 	@Temporal(TemporalType.DATE)

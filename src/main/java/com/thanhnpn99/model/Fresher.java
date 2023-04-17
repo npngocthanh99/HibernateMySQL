@@ -5,24 +5,29 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "Fresher")
 public class Fresher {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "Id")
+	@GeneratedValue
+	@Column(name = "id")
 	private int id;
 	
-	@Column(name = "Name")
+	@Column(name = "name")
 	private String name;
 
 	
@@ -32,7 +37,12 @@ public class Fresher {
 	@OneToMany
 	private List<Course> courses = new ArrayList<Course>();
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(
+        name = "Fresher_Group", 
+        joinColumns = { @JoinColumn(name = "fresher_id") }, 
+        inverseJoinColumns = { @JoinColumn(name = "group_id") }
+    )
 	private Set<Group> groups = new HashSet<Group>();
 
 	public int getId() {
