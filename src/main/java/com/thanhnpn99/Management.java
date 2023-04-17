@@ -22,43 +22,74 @@ public class Management {
 //		getCourseSyllabuses(1);
 //		createFresherAndAddress();
 //		createFresherAndCourse();
-		createFresherAndGroup();
-		
+//		createFresherAndGroup();
+		createGroup();
+//		getGroup();
+//		updateGroup();
+		deleteGroup();
 		HibernateUtil.shutdown();
 	}
+	private static void deleteGroup() {
 
-//	private static void createGroup() {
-//		Fresher fresher1 = new Fresher();
-//		Fresher fresher2 = new Fresher();
-//		Group group1 = new Group("Group 1");
-//		Group group2 = new Group("Group 2");
-//		Set<Fresher> freshers = new HashSet<>();
-//		freshers.add(fresher1);
-//		freshers.add(fresher2);
-//		Set<Group> groups = new HashSet<>();
-//		groups.add(group1);
-//		groups.add(group2);
-//		fresher1.setName("Fresher 1");
-//		fresher2.setName("Fresher 2");
-//		fresher1.setGroups(groups);
-//		fresher2.setGroups(groups);
-//		group1.setFreshers(freshers);
-//		group2.setFreshers(freshers);
-//		
-//		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-//		try {
-//			Session session = sessionFactory.openSession();
-//			session.beginTransaction();
-//			session.save(group1);
-//			session.save(group2);
-//			session.save(fresher1);
-//			session.save(fresher2);
-//			session.getTransaction().commit();
-//		} catch (Exception e) {
-//			System.out.println(e.toString());
-//		}
-//	}
-	
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		try {
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			Group javaGroup = (Group) session.get(Group.class, 1);
+			javaGroup.setName("New Java Group");
+			session.delete(javaGroup);
+			System.out.println(javaGroup);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+	}
+
+	private static void updateGroup() {
+
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		try {
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			Group javaGroup = (Group) session.get(Group.class, 1);
+			javaGroup.setName("New Java Group");
+			session.update(javaGroup);
+			System.out.println(javaGroup);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+	}
+
+	private static void getGroup() {
+
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		try {
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			Group javaGroup = (Group) session.get(Group.class, 1);
+			System.out.println(javaGroup);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+	}
+
+	private static void createGroup() {
+
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		try {
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			Group javaGroup = new Group("Java Group");
+			Group jsGroup = new Group("JavaScript Group");
+			session.save(javaGroup);
+			session.save(jsGroup);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+	}
+
 	private static void createFresherAndGroup() {
 		Fresher fresher1 = new Fresher();
 		Fresher fresher2 = new Fresher();
@@ -89,12 +120,12 @@ public class Management {
 			System.out.println(e.toString());
 		}
 	}
-	
+
 	private static void createFresherAndCourse() {
 		List<Course> courses = new ArrayList<Course>();
 		courses.add(new Course("Java"));
 		courses.add(new Course("Hibernate"));
-		Fresher fresher = new Fresher("Thanh",courses);
+		Fresher fresher = new Fresher("Thanh", courses);
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		try {
 			Session session = sessionFactory.openSession();
@@ -108,10 +139,10 @@ public class Management {
 			System.out.println(e.toString());
 		}
 	}
-	
+
 	private static void createFresherAndAddress() {
 		Address address = new Address("Quang Trung", "Go Vap");
-		Fresher fresher = new Fresher("Thanh",address);
+		Fresher fresher = new Fresher("Thanh", address);
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		try {
 			Session session = sessionFactory.openSession();
@@ -123,7 +154,7 @@ public class Management {
 			System.out.println(e.toString());
 		}
 	}
-	
+
 	private static void getCourseSyllabuses(int id) {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		try {

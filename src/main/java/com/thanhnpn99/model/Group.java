@@ -55,4 +55,9 @@ public class Group {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	@Override
+	public String toString() {
+		return id + " " + name;
+	}
+	
 }
