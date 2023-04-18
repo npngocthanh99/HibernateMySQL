@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -27,8 +30,32 @@ public class Management {
 //		createFresherAndCourse();
 //		createFresherAndGroup();
 		createGroup();
-		deleteGroupUsingHQL();
+//		deleteGroupUsingHQL();
+		useCriteria();
 		HibernateUtil.shutdown();
+	}
+	
+	private static void useCriteria() {
+
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		try {
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+
+			CriteriaQuery<Group> criteria = builder.createQuery( Group.class );
+			Root<Group> root = criteria.from( Group.class );
+			
+			criteria.select( root.get("name") );
+			criteria.where( builder.equal( root.get("id"), 2));
+			
+			List<Group> results = session.createQuery( criteria ).getResultList();
+			System.out.println(results);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
 	}
 	
 	private static void deleteGroupUsingHQL() {
